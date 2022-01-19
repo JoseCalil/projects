@@ -18,10 +18,7 @@ def get_quote():
   quote = json_data[0] ['q'] + " -" + json_data [0] ['a']
   return(quote)
 
-@client.command()
-async def embed(ctx):
-    embed=discord.Embed(title="Sample Embed", url="https://google.com", description="Test")
-    await ctx.send(embed=embed)
+
 
 
 #Test to ensure successful login of discord bot
@@ -54,6 +51,10 @@ async def on_message(message):
   if any(word in msg for word in sad_words):
     await message.channel.send(random.choice(encouragements))
   
+  async def embed(ctx):
+    embed = discord.Embed(title="Sample Embed", url = "https://google.com", description="Test")
+    await ctx.send(embed = embed)
+
   if message.content.startswith('$embed'):
     await message.channel.send(embed)
 
