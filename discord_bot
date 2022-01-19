@@ -36,7 +36,7 @@ async def on_message(message):
   #bot commands
   if message.content.startswith('$commands'):
     quote = get_quote()
-    await message.channel.send('Currently, the only commands I have online are "inspiration".')
+    await message.channel.send('Currently, the only commands I have online are "inspiration", "twitch", "twitter", and "youtube".')
 
   #simple hello!
   if message.content.startswith('$hello'):
@@ -51,12 +51,34 @@ async def on_message(message):
   if any(word in msg for word in sad_words):
     await message.channel.send(random.choice(encouragements))
   
-  async def embed(ctx):
-    embed = discord.Embed(title="Sample Embed", url = "https://google.com", description="Test")
-    await ctx.send(embed = embed)
+  #Embed to show Twitch as Primary
+  if message.content.startswith('$twitch'):
+    embed = discord.Embed(title="Amarok\'s Twitch Link", url = "https://www.twitch.tv/jose_calil", description='Oh, right. Amarok\'s Twitch link. The Twitch link for Amarok, the Twitch link chosen specially to watch Amarok, Amarok\'s Twitch link. That Twitch link?')
+    embed.set_image(url = "https://cdn.betterttv.net/emote/5a835f0658ee243d5040ceb7/3x")
+    embed.set_thumbnail(url = "https://static-cdn.jtvnw.net/jtv_user_pictures/a264eb27-506e-4851-9f00-637a4e3bd065-profile_image-70x70.png")
+    embed.add_field(name='Amarok\'s YouTube', value='https://youtube.com/jose_calil', inline = False)
+    embed.add_field(name='Amarok\'s Twitter', value='https://twitter.com/josecalil1', inline = False)
+    await message.channel.send(embed = embed)
 
-  if message.content.startswith('$embed'):
-    await message.channel.send(embed)
+  #Embed to show YouTube as primary
+  if message.content.startswith('$youtube'):
+    embed = discord.Embed(title="Amarok\'s YouTube Link", url = "https://youtube.com/jose_calil", description='Oh, right. Amarok\'s YouTube link. The YouTube link for Amarok, the YouTube link chosen specially to watch Amarok, Amarok\'s YouTube link. That YouTube link?')
+    embed.set_image(url = "https://cdn.betterttv.net/emote/5a835f0658ee243d5040ceb7/3x")
+    embed.set_thumbnail(url = "https://static-cdn.jtvnw.net/jtv_user_pictures/a264eb27-506e-4851-9f00-637a4e3bd065-profile_image-70x70.png")
+    embed.add_field(name='Amarok\'s Twitch', value='https://www.twitch.tv/jose_calil', inline = False)
+    embed.add_field(name='Amarok\'s Twitter', value='https://twitter.com/josecalil1', inline = False)
+    await message.channel.send(embed = embed)
+
+  #Embed to show Twitter as primary
+  if message.content.startswith('$twitter'):
+    embed = discord.Embed(title="Amarok\'s Twitter Link", url = "https://twitter.com/josecalil1", description='Oh, right. Amarok\'s Twitter link. The Twitter link for Amarok, the Twitter link chosen specially to hear from Amarok, Amarok\'s Twitter link. That Twitter link?')
+    embed.set_image(url = "https://cdn.betterttv.net/emote/5a835f0658ee243d5040ceb7/3x")
+    embed.set_thumbnail(url = "https://static-cdn.jtvnw.net/jtv_user_pictures/a264eb27-506e-4851-9f00-637a4e3bd065-profile_image-70x70.png")
+    embed.add_field(name='Amarok\'s Twitch', value='https://www.twitch.tv/jose_calil', inline = False)
+    embed.add_field(name='Amarok\'s YouTube', value='https://youtube.com/jose_calil', inline = False)
+    await message.channel.send(embed = embed)  
+
+
 
 keep_alive()
 client.run(os.getenv("TOKEN"))
