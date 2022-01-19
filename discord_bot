@@ -1,0 +1,61 @@
+import discord
+import os
+import requests
+import json
+import random
+from keep_alive import keep_alive
+
+client= discord.Client()
+#trigger words for reaching out
+sad_words = ["sad", "depressed", "I feel alone", "no friends", "unhappy", "miserable", "depressing"]
+
+encouragements = ["Hey friend, I hope you\'re okay! If you\'ve never been to the #affirmation-talk channel, this is the perfect place to express yourself freely.", "Hiya buddy, if you need someone to talk to, please reach out! We\'re always around to chat!", "You\'re a rockstar! Don\'t forget that! Is there anything we can do to help?"]
+
+#Used to return a quote from API Zen Quotes
+def get_quote(): 
+  response = requests.get("https://zenquotes.io/api/random")
+  json_data = json.loads(response.text)
+  quote = json_data[0] ['q'] + " -" + json_data [0] ['a']
+  return(quote)
+
+@client.command()
+async def embed(ctx):
+    embed=discord.Embed(title="Sample Embed", url="https://google.com", description="Test")
+    await ctx.send(embed=embed)
+
+
+#Test to ensure successful login of discord bot
+@client.event
+async def on_ready():
+  print('We Have Logged In As {0.user}'.format(client))
+
+#checks all messages for command or keywords at all times
+@client.event
+async def on_message(message):
+  if message.author == client:
+    return 
+
+  msg = message.content
+  #bot commands
+  if message.content.startswith('$commands'):
+    quote = get_quote()
+    await message.channel.send('Currently, the only commands I have online are "inspiration".')
+
+  #simple hello!
+  if message.content.startswith('$hello'):
+    await message.channel.send('Hello Friend! I hope you\'re enjoying the server, there is plenty to explore!')
+
+  #replies with an inspirational quote
+  if message.content.startswith('$inspiration'):
+    quote = get_quote()
+    await message.channel.send(quote)
+
+  #replies auto to trigger sad words
+  if any(word in msg for word in sad_words):
+    await message.channel.send(random.choice(encouragements))
+  
+  if message.content.startswith('$embed'):
+    await message.channel.send(embed)
+
+keep_alive()
+client.run(os.getenv("TOKEN"))
