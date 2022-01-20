@@ -4,6 +4,10 @@ import requests
 import json
 import random
 from keep_alive import keep_alive
+import giphy_client
+from giphy_client.rest import ApiException
+
+
 
 client= discord.Client()
 #trigger words for reaching out
@@ -18,7 +22,20 @@ def get_quote():
   quote = json_data[0] ['q'] + " -" + json_data [0] ['a']
   return(quote)
 
+#Used to return a random gif from GIPHY
+@client.event
+async def search_gifs(q = 'cute pets'):
+  api_key = '4Ca7vnuqj0XlDqmOPX3YTaXtKyDGXQWR'
+  api_instance = giphy_client.DefaultApi()
 
+  try:
+    api_response = api_instance.gifs_search_get(api_key, q, limit = 5, rating ='r')
+    lst = list(api_response)
+    gif = random.choice(lst)
+    
+
+  except ApiException as e:
+    print("Exception when calling API")
 
 
 #Test to ensure successful login of discord bot
@@ -46,6 +63,13 @@ async def on_message(message):
   if message.content.startswith('$inspiration'):
     quote = get_quote()
     await message.channel.send(quote)
+
+  #replies with a searched gif
+  if message.content.startswith('$giphy'):
+    embed = discord.Embed(title = "Here you go!")
+    embed.set_image(url = 'https://api.giphy.com/v1/gifs/search')
+    await message.channel.send(embed = embed)
+
 
   #replies auto to trigger sad words
   if any(word in msg for word in sad_words):
