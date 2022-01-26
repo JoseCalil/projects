@@ -15,6 +15,14 @@ sad_words = ["sad", "depressed", "I feel alone", "no friends", "unhappy", "miser
 
 encouragements = ["Hey friend, I hope you\'re okay! If you\'ve never been to the #affirmation-talk channel, this is the perfect place to express yourself freely.", "Hiya buddy, if you need someone to talk to, please reach out! We\'re always around to chat!", "You\'re a rockstar! Don\'t forget that! Is there anything we can do to help?"]
 
+#trigger words for good bot
+good_bot = ["good bot"]
+good_bot_return = ["Me me me! *Howl*", "Is it me?! I hope it\'s me! *Howl*", "!!! I am! I\'m a good bot! *Howl*", "*Howl!*"]
+
+#trigger words for good night
+good_night = ["gnight", "good night", "sleep", "nap", "goodnight", "Goodnight", "GNight", "Good Night", "Sleep", "Nap"]
+good_night_return = ["Goodnight friend!", "Hope you get some good ZZZs!", "Night night!", "See you tomorrow!", "Time for some well deserved rest!", "Woo! Beauty sleep time, not like you need it though!"]
+
 #Used to return a quote from API Zen Quotes
 def get_quote(): 
   response = requests.get("https://zenquotes.io/api/random")
@@ -22,20 +30,31 @@ def get_quote():
   quote = json_data[0] ['q'] + " -" + json_data [0] ['a']
   return(quote)
 
-#Used to return a random gif from GIPHY
-@client.event
-async def search_gifs(q = 'cute pets'):
-  api_key = '4Ca7vnuqj0XlDqmOPX3YTaXtKyDGXQWR'
-  api_instance = giphy_client.DefaultApi()
 
-  try:
-    api_response = api_instance.gifs_search_get(api_key, q, limit = 5, rating ='r')
-    lst = list(api_response)
-    gif = random.choice(lst)
-    
+async def search_gifs(discord_ctx, *, search_query):
+  giphy_url = get_giphy_url(search_query)
+  emb = discord.Embed(title="Sample Embed",type='gifv')
+  emb.set_image(url=giphy_url)
+  await discord_ctx.send(embed=emb)
 
-  except ApiException as e:
-    print("Exception when calling API")
+#Used to return a random gif from GIPHY(Work in Progress Snip)
+def get_giphy_url(search_query):
+    from pprint import pprint
+    api_key = '4Ca7vnuqj0XlDqmOPX3YTaXtKyDGXQWR'
+    api_instance = giphy_client.DefaultApi()
+    url = None
+    try:
+        # Search Endpoint
+        api_response = api_instance.gifs_search_get(api_key, search_query, limit=5, offset=0, rating='g', lang='en',
+        fmt='json')
+        first_data = api_response.data[0]
+        pprint(first_data)
+        url = api_response.data[0].images.downsized.url
+    except ApiException as e:
+        print("Exception when calling DefaultApi->gifs_search_get: %s\n" % e)
+    return url
+
+
 
 
 #Test to ensure successful login of discord bot
@@ -64,7 +83,7 @@ async def on_message(message):
     quote = get_quote()
     await message.channel.send(quote)
 
-  #replies with a searched gif
+  #replies with a searched gif(Work in Progress Snip)
   if message.content.startswith('$giphy'):
     embed = discord.Embed(title = "Here you go!")
     embed.set_image(url = 'https://api.giphy.com/v1/gifs/search')
@@ -74,7 +93,14 @@ async def on_message(message):
   #replies auto to trigger sad words
   if any(word in msg for word in sad_words):
     await message.channel.send(random.choice(encouragements))
-  
+
+  #replies auto to "good bot"
+  if any(word in msg for word in good_bot):
+    await message.channel.send(random.choice(good_bot_return))
+  #replies auto to trigger sleep words
+  if any(word in msg for word in good_night):
+    await message.channel.send(random.choice(good_night_return))  
+
   #Embed to show Twitch as Primary
   if message.content.startswith('$twitch'):
     embed = discord.Embed(title="Amarok\'s Twitch Link", url = "https://www.twitch.tv/jose_calil", description='Oh, right. Amarok\'s Twitch link. The Twitch link for Amarok, the Twitch link chosen specially to watch Amarok, Amarok\'s Twitch link. That Twitch link?')
