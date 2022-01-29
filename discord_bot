@@ -93,13 +93,20 @@ async def on_message(message):
   #replies auto to trigger sad words
   if any(word in msg for word in sad_words):
     await message.channel.send(random.choice(encouragements))
+    if message.author == client:
+      return
 
   #replies auto to "good bot"
   if any(word in msg for word in good_bot):
     await message.channel.send(random.choice(good_bot_return))
+    if message.author == client:
+      return
+
   #replies auto to trigger sleep words
   if any(word in msg for word in good_night):
-    await message.channel.send(random.choice(good_night_return))  
+    await message.channel.send(random.choice(good_night_return))
+    if message.author == client:
+      return  
 
   #Embed to show Twitch as Primary
   if message.content.startswith('$twitch'):
