@@ -1,0 +1,49 @@
+import math
+print("Welcome to Amarok\'s Tip Calculator!\n") 
+
+def tipCalculator():
+    print("\n")
+    bill = float(input("How Much Was Your Bill? \n"))
+    tax = int(input("How Much Is Your Tax %? \n"))
+    taxAmount = tax/bill * 100
+    tip = int(input("What % Would You Like To Tip? \n"))
+    splitTotal = int(input("How Many People Are Paying The Bill? \n"))
+    tipAmount = bill * tip/100
+    subtotal = bill + taxAmount + tipAmount
+    totalAmount = subtotal/splitTotal
+
+
+
+def Menu():
+    print("Please Make A Choice Below! \n")
+    print("1. Calculate my Tip!")
+    print("2. Exit Program!")
+    choice = int(input("Enter Your Decision Here: "))
+
+    if(choice == 1):
+        tipCalculator()
+    if(choice == 2):
+        exit();
+    if(choice > 2):
+        print("\n--------------------------")
+        print("Please Make A Proper Choice!")
+        print("--------------------------\n")
+        Menu()
+    elif(choice < 1):
+        print("\n--------------------------")
+        print("Please Make A Proper Choice!")
+        print("--------------------------\n")
+        Menu()
+Menu()
+
+
+
+
+
+def tipCalculatorAmount():
+    print(f"You should all pay a total of", + (subtotal),"!")
+    print("Each person will be paying $", + (totalAmount),"!")
+    print("You paid $",(taxAmount/2), "in taxes! Scammers!")
+
+
+input("\n\n Press the enter key to exit.")
