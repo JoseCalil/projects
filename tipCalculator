@@ -21,29 +21,37 @@ def Menu():
     choice = int(input("Enter Your Decision Here: "))
 
     if(choice == 1):
-        tipCalculator()
+        print("\n")
+        bill = float(input("How Much Was Your Bill? \n"))
+        tax = int(input("How Much Is Your Tax %? \n"))
+        taxAmount = tax/bill * 100
+        tip = int(input("What % Would You Like To Tip? \n"))
+        splitTotal = int(input("How Many People Are Paying The Bill? \n"))
+        tipAmount = bill * tip/100
+        subtotal = bill + taxAmount + tipAmount
+        totalAmount = subtotal/splitTotal
+        print(f"You should all pay a total of", + (subtotal),"!")
+        print("Each person will be paying $", + (totalAmount),"!")
+        print("You paid $",(taxAmount/2), "in taxes! Scammers!")
+
     if(choice == 2):
         exit();
-    if(choice > 2):
-        print("\n--------------------------")
-        print("Please Make A Proper Choice!")
-        print("--------------------------\n")
-        Menu()
-    elif(choice < 1):
+    if(choice != 1,2):
         print("\n--------------------------")
         print("Please Make A Proper Choice!")
         print("--------------------------\n")
         Menu()
 Menu()
 
+   
 
 
-
-
-def tipCalculatorAmount():
-    print(f"You should all pay a total of", + (subtotal),"!")
-    print("Each person will be paying $", + (totalAmount),"!")
-    print("You paid $",(taxAmount/2), "in taxes! Scammers!")
-
-
-input("\n\n Press the enter key to exit.")
+choice = input("\n\nDo You Need To Check Another Amount? (Y/N)")
+if(choice == 'Y','y'):
+    Menu()
+if(choice == 'N','n'):
+    print("Goodbye, Thank You For Using Amarok\'s Tip Calculator!")
+    exit();
+elif(choice != 'Y','y','N','n'):
+    print("Please select 'Y' or 'N'.")
+    Menu()
