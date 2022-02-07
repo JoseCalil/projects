@@ -33,8 +33,18 @@ def Menu():
         print(f"You should all pay a total of", + (subtotal),"!")
         print("Each person will be paying $", + (totalAmount),"!")
         print("You paid $",(taxAmount/2), "in taxes! Scammers!")
+        choice = input("\n\nDo You Need To Check Another Amount? (Y/N)") 
+        if(choice == 'Y','y'):
+                ()
+        if(choice == 'N','n'):
+            print("\n Goodbye, Thank You For Using Amarok\'s Tip Calculator!")
+            exit();
+        elif(choice != 'Y','y','N','n'):
+            print("Please select 'Y' or 'N'.")
+            Menu()
 
     if(choice == 2):
+        print("Goodbye, Thank You For Using Amarok\'s Tip Calculator!")
         exit();
     if(choice != 1,2):
         print("\n--------------------------")
@@ -44,14 +54,3 @@ def Menu():
 Menu()
 
    
-
-
-choice = input("\n\nDo You Need To Check Another Amount? (Y/N)")
-if(choice == 'Y','y'):
-    Menu()
-if(choice == 'N','n'):
-    print("Goodbye, Thank You For Using Amarok\'s Tip Calculator!")
-    exit();
-elif(choice != 'Y','y','N','n'):
-    print("Please select 'Y' or 'N'.")
-    Menu()
