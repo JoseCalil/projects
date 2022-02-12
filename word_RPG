@@ -4,24 +4,33 @@ import time
 #yesList = ["yes", "Yes", "YES", "y", "Y"]
 #noList = ["no", "No", "NO", "n", "N"]
 
+def textSpace():
+    print("\n--------------------------------------\n")
+
 def newHeroInfo():
+    print("\n Welcome adventurer to our land!")
+    textSpace()
     heroName = input("What should your Hero be called?: ")
     heroAge = int(input("How old is your Hero?: "))
     print("\nWelcome", (heroName), ", I see that you\'re", (heroAge), "years old.")
    
 
 def newHeroInfoCheck():
-    heroInfo = input("Is that correct? (Y/N) ")
-    if heroInfo == "yes" or "Yes" or "YES" or "y" or "Y":
-        print("Awesome!")
+    done = False     
+    while (not done):
+        heroInfo = input("Is that correct? (Y/N) ")
+        if heroInfo.lower() in {"yes","y"}:
+            print("Awesome!")
+            done = True
     
     #include next function below
-    elif heroInfo == "no" or "No" or "NO" or "n" or "N":
-        print("That\'s okay! Please input the correct info.")
-        newHeroInfo()
-    else:
-        print("Please choose a proper reponse. (Y/N)")
-        newHeroInfoCheck()
+        elif heroInfo.lower() in {"no","n"}:
+            print("That\'s okay! Please input the correct info.")
+            newHeroInfo()
+        else:
+            print("Please choose a proper reponse. (Y/N)")
+            newHeroInfoCheck()
 
 newHeroInfo()
 newHeroInfoCheck()
+textSpace()
