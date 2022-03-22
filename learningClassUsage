@@ -1,0 +1,20 @@
+class heroProfile():
+    def heroName(self):
+        self.name = input("Hello, what is your name?: ")
+
+    def heroNameCheck(self):
+        done = False
+        while (not done):
+            self.nameCheck = input("Is ", self.name , " correct? (Y/N)", sep ='')
+            if self.nameCheck in {"yes","y"}:
+                print("Perfect!")
+                done = True
+            elif self.nameCheck in {"no","n"}:
+                print("That's okay! Please input the correct name for your hero!: ")
+                heroName()
+
+heroInfo = heroProfile
+
+heroInfo.heroName()
+heroInfo.heroNameCheck()
+
