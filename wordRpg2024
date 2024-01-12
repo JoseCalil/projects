@@ -1,0 +1,130 @@
+import os.path
+import random
+import time
+#from rollDiceSettings import Will Add in the future for combat
+yesList = ["yes", "y"]
+noList = ["no", "n"]
+
+"""
+
+Updates to do:
+1. Add 3 weapons and stats. 1 for each class
+2. Add 1 enemy with stats and info
+3. Create a random drop that comes from killing the enemy
+
+Long term update:
+1. Save Game
+2. Create dungeon room map
+3. Create a way to level up
+4. Create gold storage 
+5. Create a potion that can be used to increase any stat
+
+"""
+
+#this contains all base stats and grabs their character name and age
+class heroCharacterInfo():
+
+    heroBaseHP = 10
+    heroBaseAtt = 1
+    heroBaseDef = 1
+    
+
+    def heroProfile(self):
+        heroName = input("Hello adventurer! What should I call you?: ")
+        heroAge = input(f"It\'s great to meet you, {heroName}. How old are you?: ")
+        print(f"Ah! Let me get this right, your name is {heroName} and you are {heroAge} years old correct?")
+
+#creating the basic fighter class info and stats
+class fighter(heroCharacterInfo):
+    def __init__(self):
+        super().__init__()
+        self.fighterBaseHP = (self.heroBaseHP + 6)
+        self.fighterBaseAtt = (self.heroBaseAtt + 5)
+        self.fighterBaseDef = (self.heroBaseDef + 3)
+        print(f"As a Fighter, your Base HP is {self.fighterBaseHP}, your Base Att is {self.fighterBaseAtt}, and your Base Def is {self.fighterBaseDef}")
+
+#creating the basic guardian class info and stats
+class guardian(heroCharacterInfo):
+    def __init__(self):
+        super().__init__()
+        self.guardianBaseHP = (self.heroBaseHP + 10)
+        self.guardianBaseAtt = (self.heroBaseAtt + 1)
+        self.guardianBaseDef = (self.heroBaseDef + 5)
+        print(f"As a Guardian, your Base HP is {self.guardianBaseHP}, your Base Att is {self.guardianBaseAtt}, and your Base Def is {self.guardianBaseDef}")
+
+#creating the basic mage class info and stats
+class mage(heroCharacterInfo):
+    def __init__(self):
+        super().__init__()
+        self.mageBaseHP = (self.heroBaseHP + 4)
+        self.mageBaseAtt = (self.heroBaseAtt + 3)
+        self.mageBaseDef = (self.heroBaseDef + 1)
+        print(f"As a Mage, your Base HP is {self.mageBaseHP}, your Base Att is {self.mageBaseAtt}, and your Base Def is {self.mageBaseDef}")
+
+
+#player can choose what class they'd like to have
+#also feeds back to player their base stats based on their class chosen
+def heroClassChoice():
+    while True:
+        print("You must choose a class to be. ")
+        print("1. Fighter\n")
+        print("2. Guardian\n")
+        print("3. Mage\n")
+    
+        choice = input("Which class would you like to choose?: ")
+
+        if choice == '1':
+            choiceConfirm = input("You'd like to be a Fighter, correct? (Y/N)")
+            if choiceConfirm.strip().lower() in yesList :
+                print(f"Awesome! Welcome to the Fighter Corps!")
+                fighterInstance = fighter()
+                break
+            elif choiceConfirm.strip().lower() in noList :
+                print(f"No worries at all, this is important decision! ")
+                heroClassChoice()
+                break
+            else :
+                print("Try Again!")
+                heroClassChoice()
+                
+
+
+        if choice == '2':
+            choiceConfirm = input("You'd like to be a Guardian, correct? (Y/N) ")
+            if choiceConfirm.strip().lower() in yesList :
+                print(f"Awesome! Welcome to the Guardian Corps!")
+                guardianInstance = guardian()
+                break
+            elif choiceConfirm.strip().lower() in noList :
+                print(f"No worries at all, this is important decision! ")
+                heroClassChoice()
+                break
+            else :
+                print("Try Again!")
+                heroClassChoice()
+
+        if choice == '3':
+            choiceConfirm = input("You'd like to be a Mage, correct? (Y/N)")
+            if choiceConfirm.strip().lower() in yesList :
+                print(f"Awesome! Welcome to the Guardian Corps!")
+                mageInstance = mage()
+                break
+            elif choiceConfirm.strip().lower() in noList :
+                print(f"No worries at all, this is important decision! ")
+                heroClassChoice()
+                break
+            else :
+                print("Try Again!")
+                heroClassChoice()
+
+
+
+
+
+
+
+startMenu = heroCharacterInfo()
+
+startMenu.heroProfile()
+heroClassChoice()
+
